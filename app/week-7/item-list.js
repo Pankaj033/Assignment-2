@@ -1,47 +1,51 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 import Item from "./item";
 
 function ItemList({ items, onItemSelect }) {
   const [sortBy, setSortBy] = useState("name");
 
-const ItemList = ({items = []}) => {
-
-  const [sortBy , setSortBy] = useState("name");
-  const [sortedItems, setSortedItems] = useState([]);
-
-  useEffect(() => {
-    if (Array.isArray(items)) {
-      const sorted = [...items].sort((a, b) => {
-        if (sortBy === "name") {
-          return a.name.localeCompare(b.name);
-        } else if (sortBy === "category") {
-          return a.category.localeCompare(b.category);
-        }
-        
-      });
-      setSortedItems(sorted);
+  items.sort((a, b) => {
+    if (sortBy === "name") {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy === "category") {
+      return a.category.localeCompare(b.category);
     }
-}, [items, sortBy]);
+    return 0;
+  });
+
   return (
     <div>
-      <button onClick={() => setSortBy('name')} style={{ backgroundColor: sortBy === 'name' ? 'none' : '' }}>
-        <button class="bg-orange-500 p-1 m-2 w-28">Name</button>
-      </button>
-      <button onClick={() => setSortBy('category')} style={{ backgroundColor: sortBy === 'category' ? 'none' : '' }}>
-        <button class="bg-orange-700 p-1 m-2 w-28">Category</button>
-      </button>
+      <div className="p-2 m-4  max-w-sm">
+        <span className="text-xl mr-2 ml-8"></span>
+        <button
+          onClick={() => setSortBy("name")}
+          className={`px-8 py-2 rounded ${sortBy === "name" ? "bg-orange-500" : "bg-orange-700"
+            }`}
+        >
+          Name
+        </button>
+        <button
+          onClick={() => setSortBy("category")}
+          className={`ml-2 px-5 py-2 rounded ${sortBy === "category" ? "bg-orange-500" : "bg-orange-700"
+            }`}
+        >
+          Category
+        </button>
+      </div>
 
-
-      <ul>
-        {sortedItems.map((item) => (
-          <Item key={item.id} {...item} />
-        ))}
-      </ul>
+      {items.map((item) => (
+        <Item
+          key={item.id}
+          name={item.name}
+          quantity={item.quantity}
+          category={item.category}
+          onSelect={() => onItemSelect(item)}
+        />
+      ))}
     </div>
   );
-};
 }
 
 export default ItemList;

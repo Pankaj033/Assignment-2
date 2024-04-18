@@ -1,11 +1,13 @@
+
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Item from "./item";
+// import items from "./items.json";
 
-const ItemList = ({items = []}) => {
+const ItemList = ({ items = [] }) => {
 
-  const [sortBy , setSortBy] = useState("name");
+  const [sortBy, setSortBy] = useState("name");
   const [sortedItems, setSortedItems] = useState([]);
 
   useEffect(() => {
@@ -16,24 +18,24 @@ const ItemList = ({items = []}) => {
         } else if (sortBy === "category") {
           return a.category.localeCompare(b.category);
         }
-        
+
       });
       setSortedItems(sorted);
     }
-}, [items, sortBy]);
+  }, [items, sortBy]);
+
+
+
   return (
+
     <div>
-      <button onClick={() => setSortBy('name')} style={{ backgroundColor: sortBy === 'name' ? 'none' : '' }}>
-        <button class="bg-orange-500 p-1 m-2 w-28">Name</button>
-      </button>
-      <button onClick={() => setSortBy('ategory')} style={{ backgroundColor: sortBy === 'category' ? 'none' : '' }}>
-        <button class="bg-orange-700 p-1 m-2 w-28">Category</button>
-      </button>
-
-
+      <button onClick={() => setSortBy('name')} className="p-2 m-1 text-xl bg-orange-400 hover:bg-gray-300">
+        Name</button>
+      <button onClick={() => setSortBy('category')} className="p-2 m-1 text-xl bg-orange-400   hover:bg-gray-300">
+        Category</button>
       <ul>
-        {sortedItems.map((item) => (
-          <Item key={item.id} {...item} />
+        {sortedItems.map(item => (
+          <Item key={item.id} name={item.name} quantity={item.quantity} category={item.category} />
         ))}
       </ul>
     </div>

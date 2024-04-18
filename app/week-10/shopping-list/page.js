@@ -36,18 +36,15 @@ function Page() {
   };
 
   return (
-    <main className="bg-[#2a628f] flex">
-      <div>
-        <h1 className="text-3xl font-bold mb-2 ml-16 p-4 text-white">
-          Shopping List
-        </h1>
-        <h2 className="text-xl font-bold ml-8 text-white">Add a new Item</h2>
-        <div>
-          <NewItem onAddItem={handleAddItem} />
-          <ItemList items={items} onItemSelect={handleItemSelect} />
-        </div>
+    <main className="flex flex-col md:flex-row justify-around p-2">
+      <div className="flex-1">
+        <h1 className='font-bold text-4xl mb-4'>Shopping List</h1>
+        <NewItem onAddItem={handleAddItem} />
+        <ItemList items={items} onItemSelect={handleItemSelect} />
       </div>
-      <MealIdeas ingredient={selectedItemName} />
+      <div className="flex-1">
+        <MealIdeas ingredient={selectedItemName} />
+      </div>
     </main>
   );
 }
